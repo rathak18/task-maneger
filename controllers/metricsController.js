@@ -28,7 +28,16 @@ exports.getTaskMetricsByStatus = async (req, res) => {
       completed_tasks: completedTasks[0].count,
     };
 
-    res.json(metrics);
+    // Include the request body data in the response
+    const requestBodyData = req.body;
+
+    // Combine the metrics with the request body data
+    const response = {
+      date: requestBodyData.date,
+      metrics: metrics,
+    };
+
+    res.json(response);
   } catch (error) {
     console.error('Error fetching task metrics:', error);
     res.status(500).json({ error: 'Internal server error' });
